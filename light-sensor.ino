@@ -3,8 +3,6 @@
 #include <MKRWAN.h>
 #include "arduino_secrets.h"
 
-int state = 0;
-
 BH1750 lightMeter;
 int ledPin = 0;
 
@@ -16,27 +14,26 @@ int brightness;
 
 void setup(){
 
-  // setup_lora();
+  setup_lora();
 
-  // setup_light_sensor();
-
-  setup_bluetooth();
+  setup_light_sensor();
 
 }
 
 void loop() {
 
-  // loop_light_sensor();
-
-  loop_bluetooth();
+  loop_light_sensor();
 
   delay(5000);  // send brightness once a minute
 
-  // loop_lora();
+  loop_lora();
 
 }
 
-
+/**
+* Initialises the light sensor
+* LED out pin supports PWM to modify brightness
+*/
 void setup_light_sensor() {
 
   pinMode(ledPin, OUTPUT);
@@ -50,7 +47,11 @@ void setup_light_sensor() {
 
 }
 
-
+/**
+* Initialises connection to TTN
+* Adapted from:
+*   https://docs.arduino.cc/tutorials/mkr-wan-1310/mkr-wan-library-examples
+*/
 void setup_lora() {
 
   Serial.begin(115200);
@@ -76,16 +77,11 @@ void setup_lora() {
 
 }
 
-
-void setup_bluetooth() {
-
-  Serial.begin(38400);
-
-  // Serial.println("Setting up Bluetooth...");
-
-}
-
-
+/**
+* Measures the light level
+* Adapted from:
+*   https://github.com/claws/BH1750
+*/
 void loop_light_sensor() {
 
   float lux = lightMeter.readLightLevel();
@@ -95,32 +91,18 @@ void loop_light_sensor() {
 
   // scale the brightness to be in 8 bit range ( 0 - 255 )
   // inverse scale - lower brightness -> brighter led
-  int brightness = abs((lux / 3.5) - 255);
+  brightness = abs((lux / 3.5) - 255);
   Serial.print("Brightness: ");
   Serial.println(brightness);
   analogWrite(ledPin, brightness);
 
 }
 
-
-void loop_bluetooth() {
-
-  if (Serial.available() > 0) {
-    state = Serial.read();
-  }
-
-  if (state == '0') {
-    Serial.println("LED: OFF"); // Send back, to the phone, the String "LED: ON"
-    state = 0;
-  }
-  else if (state == '1') {
-    Serial.println("LED: ON");;
-    state = 0;
-  }
-
-}
-
-
+/**
+* Communicates brightness to application server using LoRa
+* Adapted from:
+*   https://docs.arduino.cc/tutorials/mkr-wan-1310/mkr-wan-library-examples
+*/
 void loop_lora() {
 
   // send brightness LoRa message
