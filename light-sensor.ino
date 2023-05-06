@@ -24,7 +24,7 @@ void loop() {
 
   loop_light_sensor();
 
-  delay(5000);  // send brightness once a minute
+  delay(60000);  // send brightness once a minute
 
   loop_lora();
 
