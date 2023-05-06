@@ -3,6 +3,8 @@
 #include <MKRWAN.h>
 #include "arduino_secrets.h"
 
+int state = 0;
+
 BH1750 lightMeter;
 int ledPin = 0;
 
@@ -10,7 +12,46 @@ LoRaModem modem;
 String appEui = "0000000000000000";
 String appKey = "4DE8F1A874E276F98D26E29F1E4E258F";
 
+int brightness;
+
 void setup(){
+
+  // setup_lora();
+
+  // setup_light_sensor();
+
+  setup_bluetooth();
+
+}
+
+void loop() {
+
+  // loop_light_sensor();
+
+  loop_bluetooth();
+
+  delay(5000);  // send brightness once a minute
+
+  // loop_lora();
+
+}
+
+
+void setup_light_sensor() {
+
+  pinMode(ledPin, OUTPUT);
+
+  Serial.begin(9600);
+
+  // Initialize the I2C bus
+  Wire.begin();
+
+  lightMeter.begin();
+
+}
+
+
+void setup_lora() {
 
   Serial.begin(115200);
   while (!Serial);
@@ -33,18 +74,19 @@ void setup(){
   // Set poll interval to 60 secs.
   modem.minPollInterval(60);
 
-  pinMode(ledPin, OUTPUT);
+}
 
-  Serial.begin(9600);
 
-  // Initialize the I2C bus
-  Wire.begin();
+void setup_bluetooth() {
 
-  lightMeter.begin();
+  Serial.begin(38400);
+
+  // Serial.println("Setting up Bluetooth...");
 
 }
 
-void loop() {
+
+void loop_light_sensor() {
 
   float lux = lightMeter.readLightLevel();
   Serial.print("Light: ");
@@ -58,7 +100,28 @@ void loop() {
   Serial.println(brightness);
   analogWrite(ledPin, brightness);
 
-  delay(60000);  // send brightness once a minute
+}
+
+
+void loop_bluetooth() {
+
+  if (Serial.available() > 0) {
+    state = Serial.read();
+  }
+
+  if (state == '0') {
+    Serial.println("LED: OFF"); // Send back, to the phone, the String "LED: ON"
+    state = 0;
+  }
+  else if (state == '1') {
+    Serial.println("LED: ON");;
+    state = 0;
+  }
+
+}
+
+
+void loop_lora() {
 
   // send brightness LoRa message
   String msg = String(brightness);
@@ -100,4 +163,3 @@ void loop() {
   Serial.println();
 
 }
-

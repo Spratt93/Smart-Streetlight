@@ -14,4 +14,4 @@ Parts:
 - Arduino MKRWAN 1300 
 - LED (Streetlight concept)
 - BH1750 light sensor
-- Bluetooth sensor
+- HC05 Bluetooth module
