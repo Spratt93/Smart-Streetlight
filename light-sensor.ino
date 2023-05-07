@@ -11,6 +11,7 @@ String appEui = "0000000000000000";
 String appKey = "4DE8F1A874E276F98D26E29F1E4E258F";
 
 int brightness;
+int brightness_perc;
 
 void setup(){
 
@@ -40,7 +41,7 @@ void setup_light_sensor() {
 
   Serial.begin(9600);
 
-  // Initialize the I2C bus
+  // Initialise the I2C bus
   Wire.begin();
 
   lightMeter.begin();
@@ -89,24 +90,34 @@ void loop_light_sensor() {
   Serial.print(lux);
   Serial.println(" lx");
 
-  // scale the brightness to be in 8 bit range ( 0 - 255 )
-  // inverse scale - lower brightness -> brighter led
-  brightness = abs((lux / 3.5) - 255);
-  Serial.print("Brightness: ");
-  Serial.println(brightness);
+  // Typical Sunrise/Sunset reading is 400 lux
+  // Therefore any brighter than this leads to streetlight being switched off
+  // Otherwise inverse scale the brightness between 0 - 255 (8-bit PWM)
+  if (lux > 400) {
+    brightness = 0;
+  } else {
+    brightness = abs((lux / 1.57) - 255);
+  }
+
+  // store percentage level of brightness
+  brightness_perc = int((brightness / 255) * 100);
+
+  Serial.print("Brightness(%): ");
+  Serial.println(brightness_perc);
   analogWrite(ledPin, brightness);
 
 }
 
 /**
 * Communicates brightness to application server using LoRa
+* Strictly uplink messaging (messages aren't received from TTN)
 * Adapted from:
 *   https://docs.arduino.cc/tutorials/mkr-wan-1310/mkr-wan-library-examples
 */
 void loop_lora() {
 
-  // send brightness LoRa message
-  String msg = String(brightness);
+  // send brightness level over LoRa
+  String msg = String(brightness_perc);
   Serial.print("Sending: " + msg + " - ");
   for (unsigned int i = 0; i < msg.length(); i++) {
     Serial.print(msg[i] >> 4, HEX);
@@ -126,22 +137,5 @@ void loop_lora() {
     Serial.println("(you may send a limited amount of messages per minute, depending on the signal strength");
     Serial.println("it may vary from 1 message every couple of seconds to 1 message every minute)");
   }
-  delay(1000);
-  if (!modem.available()) {
-    Serial.println("No downlink message received at this time.");
-    return;
-  }
-  char rcv[64];
-  int i = 0;
-  while (modem.available()) {
-    rcv[i++] = (char)modem.read();
-  }
-  Serial.print("Received: ");
-  for (unsigned int j = 0; j < i; j++) {
-    Serial.print(rcv[j] >> 4, HEX);
-    Serial.print(rcv[j] & 0xF, HEX);
-    Serial.print(" ");
-  }
-  Serial.println();
 
 }
