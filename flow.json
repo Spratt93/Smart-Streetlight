@@ -26,7 +26,8 @@
             [
                 "afe0f07b548eb442",
                 "5819365f61c97dd5",
-                "f87659ddfc216c3b"
+                "d1604f5bb216dd55",
+                "39c6f330d9a40a54"
             ]
         ]
     },
@@ -43,8 +44,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 840,
-        "y": 440,
+        "x": 820,
+        "y": 400,
         "wires": []
     },
     {
@@ -52,7 +53,7 @@
         "type": "function",
         "z": "187e9ec281c222a8",
         "name": "get_brightness",
-        "func": "msg.payload = msg.payload['uplink_message']['decoded_payload']['brightness']\nreturn msg;",
+        "func": "let brightness = msg.payload['uplink_message']['decoded_payload']['brightness'];\nmsg.payload = parseInt(brightness)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -63,7 +64,8 @@
         "wires": [
             [
                 "30cf04f3bebd7556",
-                "95e9848d36dbd314"
+                "95e9848d36dbd314",
+                "f16dba8ad5bbd345"
             ]
         ]
     },
@@ -73,7 +75,7 @@
         "z": "187e9ec281c222a8",
         "name": "",
         "group": "0d50e0f6edec8522",
-        "order": 0,
+        "order": 2,
         "width": 0,
         "height": 0,
         "gtype": "gage",
@@ -81,7 +83,7 @@
         "label": "%",
         "format": "{{value}}",
         "min": 0,
-        "max": "255",
+        "max": "100",
         "colors": [
             "#00b500",
             "#e6e600",
@@ -92,7 +94,7 @@
         "diff": false,
         "className": "",
         "x": 850,
-        "y": 520,
+        "y": 480,
         "wires": []
     },
     {
@@ -104,11 +106,11 @@
         "width": 0,
         "height": 0,
         "name": "",
-        "label": "Time of last message",
+        "label": "Last message received at:",
         "format": "{{msg.payload}}",
-        "layout": "row-spread",
+        "layout": "row-center",
         "className": "",
-        "x": 880,
+        "x": 900,
         "y": 1000,
         "wires": []
     },
@@ -150,59 +152,23 @@
         "wires": []
     },
     {
-        "id": "f87659ddfc216c3b",
-        "type": "function",
-        "z": "187e9ec281c222a8",
-        "name": "extract_chart",
-        "func": "let brightness = msg.payload['uplink_message']['decoded_payload']['brightness'];\nlet time = msg.payload['received_at'].slice(11).slice(0, -14);\nlet data = {\n    'brightness': brightness,\n    'time': time\n}\n\nmsg.payload = [data]\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 750,
-        "y": 720,
-        "wires": [
-            [
-                "f98711adf3f5b8c0",
-                "4415434bc5f05439"
-            ]
-        ]
-    },
-    {
-        "id": "f98711adf3f5b8c0",
-        "type": "debug",
-        "z": "187e9ec281c222a8",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 960,
-        "y": 660,
-        "wires": []
-    },
-    {
-        "id": "4415434bc5f05439",
+        "id": "f16dba8ad5bbd345",
         "type": "ui_chart",
         "z": "187e9ec281c222a8",
         "name": "",
         "group": "0d50e0f6edec8522",
-        "order": 2,
+        "order": 3,
         "width": 0,
         "height": 0,
-        "label": "Chart",
+        "label": "",
         "chartType": "line",
         "legend": "false",
         "xformat": "HH:mm",
         "interpolate": "linear",
-        "nodata": "",
+        "nodata": "No data to display...",
         "dot": false,
         "ymin": "0",
-        "ymax": "255",
+        "ymax": "100",
         "removeOlder": 1,
         "removeOlderPoints": "",
         "removeOlderUnit": "3600",
@@ -223,11 +189,99 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 970,
-        "y": 740,
+        "x": 830,
+        "y": 560,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "d1604f5bb216dd55",
+        "type": "debug",
+        "z": "187e9ec281c222a8",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "39c6f330d9a40a54",
+        "type": "function",
+        "z": "187e9ec281c222a8",
+        "name": "get_location",
+        "func": "let metadata = msg.payload['uplink_message']['rx_metadata'][0];\nlet lon = metadata['location']['longitude']\nlet lat = metadata['location']['latitude']\n\nmsg.payload = {\n    'name': 'Streetlight#1',\n    'lat': lat,\n    'lon': lon\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 1120,
+        "wires": [
+            [
+                "6f229a1b8011fbc6",
+                "bbab47860494bf66"
+            ]
+        ]
+    },
+    {
+        "id": "6f229a1b8011fbc6",
+        "type": "debug",
+        "z": "187e9ec281c222a8",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "bbab47860494bf66",
+        "type": "ui_worldmap",
+        "z": "187e9ec281c222a8",
+        "group": "b8ae41f76f32fd71",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Location",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "OSMG",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "hide",
+        "layers": "hide",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "true",
+        "coords": "none",
+        "showgrid": "false",
+        "showruler": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "DR,CO,RA,DN,HM",
+        "maplist": "OSMG,OSMC,EsriC,EsriS,EsriT,EsriDG,UKOS",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 860,
+        "y": 1220,
+        "wires": []
     },
     {
         "id": "6cdc64600e68dc88",
@@ -262,6 +316,17 @@
         "name": "Home",
         "tab": "af24c22933d119b8",
         "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b8ae41f76f32fd71",
+        "type": "ui_group",
+        "name": "Location",
+        "tab": "af24c22933d119b8",
+        "order": 2,
         "disp": true,
         "width": "6",
         "collapse": false,
