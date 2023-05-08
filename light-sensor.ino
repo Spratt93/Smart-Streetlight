@@ -11,7 +11,7 @@ LoRaModem modem;
 String appEui = "0000000000000000";
 String appKey = "4DE8F1A874E276F98D26E29F1E4E258F";
 
-int brightness;
+float brightness;
 int brightness_perc;
 int power;
 
@@ -95,17 +95,20 @@ void loop_light_sensor() {
   // Typical Sunrise/Sunset reading is 400 lux
   // Therefore any brighter than this leads to streetlight being switched off
   // Otherwise inverse scale the brightness between 0 - 255 (8-bit PWM)
-  if (lux > 400) {
-    brightness = 0;
+  if (lux < 400) {
+    brightness = (lux / 1.57) - 255;
+    brightness = abs(brightness);
   } else {
-    brightness = abs((lux / 1.57) - 255);
+    brightness = 0;
   }
 
   // store percentage level of brightness
   brightness_perc = int((brightness / 255) * 100);
 
   // calculate the current power consumption using RMS
-  power = int(pow(3.3 * (brightness_perc / 100), 2) / 55);
+  float avg_voltage = 3.3 * (brightness_perc / 100);
+  float rms = pow(avg_voltage, 2);
+  power = int(rms / 55);
 
   Serial.print("Brightness(%): ");
   Serial.println(brightness_perc);
@@ -124,7 +127,7 @@ void loop_light_sensor() {
 void loop_lora() {
 
   StaticJsonDocument<200> stats;
-  stats["brightness"] = brightness;
+  stats["brightness"] = brightness_perc;
   stats["power"] = power;
 
   // Serialize the JSON object to a byte array
