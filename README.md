@@ -14,4 +14,9 @@ Parts:
 - Arduino MKRWAN 1300 
 - LED (Streetlight concept)
 - BH1750 light sensor
-- HC05 Bluetooth module
+
+To run:
+- Power up circuit and upload *light-sensor.ino* to the arduino
+- `$ node-red`
+- Import *flow.json* into the canvas
+- Go to dashboard and view test deployment
