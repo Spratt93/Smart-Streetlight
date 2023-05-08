@@ -1,6 +1,7 @@
 #include <Wire.h>
 #include <BH1750.h>
 #include <MKRWAN.h>
+#include <ArduinoJson.h>
 #include "arduino_secrets.h"
 
 BH1750 lightMeter;
@@ -12,6 +13,7 @@ String appKey = "4DE8F1A874E276F98D26E29F1E4E258F";
 
 int brightness;
 int brightness_perc;
+int power;
 
 void setup(){
 
@@ -102,33 +104,38 @@ void loop_light_sensor() {
   // store percentage level of brightness
   brightness_perc = int((brightness / 255) * 100);
 
+  // calculate the current power consumption using RMS
+  power = int(pow(3.3 * (brightness_perc / 100), 2) / 55);
+
   Serial.print("Brightness(%): ");
   Serial.println(brightness_perc);
+  Serial.print("Power(W): ");
+  Serial.println(power);
   analogWrite(ledPin, brightness);
 
 }
 
 /**
-* Communicates brightness to application server using LoRa
+* Communicates brightness and power to application server using LoRa
 * Strictly uplink messaging (messages aren't received from TTN)
 * Adapted from:
 *   https://docs.arduino.cc/tutorials/mkr-wan-1310/mkr-wan-library-examples
 */
 void loop_lora() {
 
-  // send brightness level over LoRa
-  String msg = String(brightness_perc);
-  Serial.print("Sending: " + msg + " - ");
-  for (unsigned int i = 0; i < msg.length(); i++) {
-    Serial.print(msg[i] >> 4, HEX);
-    Serial.print(msg[i] & 0xF, HEX);
-    Serial.print(" ");
-  }
-  Serial.println();
+  StaticJsonDocument<200> stats;
+  stats["brightness"] = brightness;
+  stats["power"] = power;
+
+  // Serialize the JSON object to a byte array
+  String jsonString;
+  serializeJson(stats, jsonString);
+
+  Serial.print("Sending: " + jsonString + " - ");
 
   int err;
   modem.beginPacket();
-  modem.print(msg);
+  modem.print(jsonString);
   err = modem.endPacket(true);
   if (err > 0) {
     Serial.println("Message sent correctly!");
