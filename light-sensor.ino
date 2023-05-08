@@ -105,10 +105,12 @@ void loop_light_sensor() {
   // store percentage level of brightness
   brightness_perc = int((brightness / 255) * 100);
 
-  // calculate the current power consumption using RMS
-  float avg_voltage = 3.3 * (brightness_perc / 100);
-  float rms = pow(avg_voltage, 2);
-  power = int(rms / 55);
+  // Calculating power consumption with a PWM signal is:
+  //   Power Consumption = Duty Cycle * Load Power
+  //     Duty Cycle == Brightness Percentage in this case
+  //     Load Power == Operating voltage * Operating current - in this case 2.3V and 0.02A
+  float load_power = 2.3 * 0.02;
+  power = int(brightness_perc * load_power);
 
   Serial.print("Brightness(%): ");
   Serial.println(brightness_perc);
