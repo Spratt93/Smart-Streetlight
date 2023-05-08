@@ -18,5 +18,6 @@ Parts:
 To run:
 - Power up circuit and upload *light-sensor.ino* to the arduino
 - `$ node-red`
+- Go to *localhost:1880*
 - Import *flow.json* into the canvas
 - Go to dashboard and view test deployment
