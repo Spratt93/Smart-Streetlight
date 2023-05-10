@@ -149,5 +149,30 @@ void loop_lora() {
     Serial.println("(you may send a limited amount of messages per minute, depending on the signal strength");
     Serial.println("it may vary from 1 message every couple of seconds to 1 message every minute)");
   }
+  delay(1000);
+  if (!modem.available()) {
+    Serial.println("No manual config!");
+    return;
+  }
+  char rcv[64];
+  int i = 0;
+  while (modem.available()) {
+    rcv[i++] = (char)modem.read();
+  }
+  Serial.print("Received: ");
+  StaticJsonDocument<200> resp;
+  DeserializationError error = deserializeJson(resp, jsonString);
+
+  // Check for parsing errors
+  if (error) {
+    Serial.print("JSON parsing failed: ");
+    Serial.println(error.c_str());
+    return;
+  }
+
+  int b = resp["brightness"];
+
+  Serial.print(b);
+  Serial.println();
 
 }
