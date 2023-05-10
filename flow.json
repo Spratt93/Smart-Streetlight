@@ -109,7 +109,7 @@
         "height": 0,
         "name": "",
         "label": "Last message received at:",
-        "format": "{{msg.payload}}",
+        "format": "{{msg.payload}} GMT",
         "layout": "row-center",
         "className": "",
         "x": 900,
@@ -161,7 +161,7 @@
         "group": "0d50e0f6edec8522",
         "order": 3,
         "width": "6",
-        "height": "7",
+        "height": "8",
         "label": "Brightness over time",
         "chartType": "line",
         "legend": "false",
@@ -256,7 +256,7 @@
         "group": "b8ae41f76f32fd71",
         "order": 1,
         "width": "6",
-        "height": "12",
+        "height": "13",
         "name": "Location",
         "lat": "",
         "lon": "",
@@ -296,13 +296,14 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 610,
-        "y": 1380,
+        "x": 570,
+        "y": 1560,
         "wires": [
             [
                 "fa445db8dda58180",
+                "4f07bbbfa0fe5cdf",
                 "b4f1307cad533869",
-                "4f07bbbfa0fe5cdf"
+                "edf592639e33f6a4"
             ]
         ]
     },
@@ -312,7 +313,7 @@
         "z": "187e9ec281c222a8",
         "name": "",
         "group": "1598578620ada641",
-        "order": 2,
+        "order": 3,
         "width": "6",
         "height": "7",
         "label": "Power over time",
@@ -351,28 +352,12 @@
         ]
     },
     {
-        "id": "b4f1307cad533869",
-        "type": "debug",
-        "z": "187e9ec281c222a8",
-        "name": "debug 5",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 880,
-        "y": 1460,
-        "wires": []
-    },
-    {
         "id": "4f07bbbfa0fe5cdf",
         "type": "ui_gauge",
         "z": "187e9ec281c222a8",
         "name": "",
         "group": "1598578620ada641",
-        "order": 1,
+        "order": 2,
         "width": 0,
         "height": 0,
         "gtype": "donut",
@@ -400,11 +385,10 @@
         "z": "187e9ec281c222a8",
         "mydb": "1d7fba2766d0a819",
         "name": "my-db",
-        "x": 830,
+        "x": 710,
         "y": 1740,
         "wires": [
             [
-                "294521498135315d",
                 "bc5e391067a4103a"
             ]
         ]
@@ -420,62 +404,29 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 600,
-        "y": 1700,
+        "x": 500,
+        "y": 1740,
         "wires": [
             [
-                "2bf9e2c77bd08ce5",
-                "63846a3fb2d0022b"
+                "2bf9e2c77bd08ce5"
             ]
         ]
-    },
-    {
-        "id": "63846a3fb2d0022b",
-        "type": "debug",
-        "z": "187e9ec281c222a8",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 840,
-        "y": 1660,
-        "wires": []
-    },
-    {
-        "id": "294521498135315d",
-        "type": "debug",
-        "z": "187e9ec281c222a8",
-        "name": "debug 7",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1080,
-        "y": 1640,
-        "wires": []
     },
     {
         "id": "71bd6ee38f3d68d9",
         "type": "ui_text",
         "z": "187e9ec281c222a8",
-        "group": "0d50e0f6edec8522",
-        "order": 2,
-        "width": 0,
-        "height": 0,
+        "group": "1598578620ada641",
+        "order": 1,
+        "width": "0",
+        "height": "0",
         "name": "",
-        "label": "Average Power at this hour:",
-        "format": "{{msg.payload}}W",
+        "label": "Avg. Brightness at this hour:",
+        "format": "{{msg.payload}}%",
         "layout": "row-center",
         "className": "",
-        "x": 1280,
-        "y": 1840,
+        "x": 1100,
+        "y": 1740,
         "wires": []
     },
     {
@@ -489,94 +440,92 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1040,
-        "y": 1840,
+        "x": 880,
+        "y": 1740,
         "wires": [
             [
-                "71bd6ee38f3d68d9"
+                "71bd6ee38f3d68d9",
+                "edf592639e33f6a4"
             ]
         ]
     },
     {
-        "id": "45175cb7c2288c62",
-        "type": "ui_switch",
+        "id": "b4f1307cad533869",
+        "type": "debug",
         "z": "187e9ec281c222a8",
-        "name": "",
-        "label": "Manual on switch",
-        "tooltip": "",
-        "group": "0d50e0f6edec8522",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "decouple": "false",
-        "topic": "topic",
-        "topicType": "msg",
-        "style": "",
-        "onvalue": "true",
-        "onvalueType": "bool",
-        "onicon": "",
-        "oncolor": "",
-        "offvalue": "false",
-        "offvalueType": "bool",
-        "officon": "",
-        "offcolor": "",
-        "animate": false,
-        "className": "",
-        "x": 350,
-        "y": 280,
-        "wires": [
-            [
-                "6ccef5b77b0ff69c"
-            ]
-        ]
-    },
-    {
-        "id": "6ccef5b77b0ff69c",
-        "type": "mqtt out",
-        "z": "187e9ec281c222a8",
-        "name": "",
-        "topic": "v3/ecs@ttn/devices/eui-a8610a3237266609/down",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "6cdc64600e68dc88",
-        "x": 710,
-        "y": 280,
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 1460,
         "wires": []
     },
     {
-        "id": "8f56d4dc3b8e4938",
-        "type": "inject",
+        "id": "edf592639e33f6a4",
+        "type": "join",
         "z": "187e9ec281c222a8",
-        "name": "manual_on",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "v3/ecs@ttn/devices/eui-a8610a3237266609/down",
-        "payload": "100",
-        "payloadType": "num",
-        "x": 140,
-        "y": 280,
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1030,
+        "y": 1660,
         "wires": [
             [
-                "45175cb7c2288c62"
+                "26d2503b6f442a96",
+                "1d4da255ae386c9c"
             ]
         ]
+    },
+    {
+        "id": "26d2503b6f442a96",
+        "type": "ui_text",
+        "z": "187e9ec281c222a8",
+        "group": "0d50e0f6edec8522",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Difference",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "x": 1220,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "1d4da255ae386c9c",
+        "type": "debug",
+        "z": "187e9ec281c222a8",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 1640,
+        "wires": []
     },
     {
         "id": "6cdc64600e68dc88",
