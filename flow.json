@@ -28,7 +28,8 @@
                 "5819365f61c97dd5",
                 "d1604f5bb216dd55",
                 "39c6f330d9a40a54",
-                "c6c79484d97dad03"
+                "c6c79484d97dad03",
+                "468c1f6d952bfa40"
             ]
         ]
     },
@@ -394,6 +395,190 @@
         "wires": []
     },
     {
+        "id": "2bf9e2c77bd08ce5",
+        "type": "mysql",
+        "z": "187e9ec281c222a8",
+        "mydb": "1d7fba2766d0a819",
+        "name": "my-db",
+        "x": 830,
+        "y": 1740,
+        "wires": [
+            [
+                "294521498135315d",
+                "bc5e391067a4103a"
+            ]
+        ]
+    },
+    {
+        "id": "468c1f6d952bfa40",
+        "type": "function",
+        "z": "187e9ec281c222a8",
+        "name": "insert_db",
+        "func": "let brightness = msg.payload['uplink_message']['decoded_payload']['brightness'];\nlet power = msg.payload['uplink_message']['decoded_payload']['power'];\nlet date = msg.payload['received_at'].slice(0, 10);\nlet time = msg.payload['received_at'].slice(11, 19);\n\nlet q = `INSERT INTO stats VALUES (${brightness}, ${power}, \"${date}\", \"${time}\");`\nlet q1 = `SELECT AVG(brightness) FROM stats WHERE HOUR(time) = ${time.slice(0, 2)};`\n\nlet query = `${q} ${q1}`\n\nmsg.topic = query;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1700,
+        "wires": [
+            [
+                "2bf9e2c77bd08ce5",
+                "63846a3fb2d0022b"
+            ]
+        ]
+    },
+    {
+        "id": "63846a3fb2d0022b",
+        "type": "debug",
+        "z": "187e9ec281c222a8",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "294521498135315d",
+        "type": "debug",
+        "z": "187e9ec281c222a8",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "71bd6ee38f3d68d9",
+        "type": "ui_text",
+        "z": "187e9ec281c222a8",
+        "group": "0d50e0f6edec8522",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Average Power at this hour:",
+        "format": "{{msg.payload}}W",
+        "layout": "row-center",
+        "className": "",
+        "x": 1280,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "bc5e391067a4103a",
+        "type": "function",
+        "z": "187e9ec281c222a8",
+        "name": "filter_avg",
+        "func": "let avg = msg.payload[1][0]['AVG(brightness)'];\n\nmsg.payload = avg;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 1840,
+        "wires": [
+            [
+                "71bd6ee38f3d68d9"
+            ]
+        ]
+    },
+    {
+        "id": "45175cb7c2288c62",
+        "type": "ui_switch",
+        "z": "187e9ec281c222a8",
+        "name": "",
+        "label": "Manual on switch",
+        "tooltip": "",
+        "group": "0d50e0f6edec8522",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 350,
+        "y": 280,
+        "wires": [
+            [
+                "6ccef5b77b0ff69c"
+            ]
+        ]
+    },
+    {
+        "id": "6ccef5b77b0ff69c",
+        "type": "mqtt out",
+        "z": "187e9ec281c222a8",
+        "name": "",
+        "topic": "v3/ecs@ttn/devices/eui-a8610a3237266609/down",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6cdc64600e68dc88",
+        "x": 710,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "8f56d4dc3b8e4938",
+        "type": "inject",
+        "z": "187e9ec281c222a8",
+        "name": "manual_on",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "v3/ecs@ttn/devices/eui-a8610a3237266609/down",
+        "payload": "100",
+        "payloadType": "num",
+        "x": 140,
+        "y": 280,
+        "wires": [
+            [
+                "45175cb7c2288c62"
+            ]
+        ]
+    },
+    {
         "id": "6cdc64600e68dc88",
         "type": "mqtt-broker",
         "name": "",
@@ -452,6 +637,16 @@
         "width": "6",
         "collapse": false,
         "className": ""
+    },
+    {
+        "id": "1d7fba2766d0a819",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "comp3210",
+        "tz": "",
+        "charset": "UTF8"
     },
     {
         "id": "af24c22933d119b8",
