@@ -15,6 +15,9 @@ float brightness;
 int brightness_perc;
 int power;
 
+bool is_man_on = false;
+bool is_man_off = false;
+
 void setup(){
 
   setup_lora();
@@ -27,9 +30,9 @@ void loop() {
 
   loop_light_sensor();
 
-  delay(60000);  // send brightness once a minute
-
   loop_lora();
+
+  delay(60000);  // send brightness once a minute
 
 }
 
@@ -95,7 +98,13 @@ void loop_light_sensor() {
   // Typical Sunrise/Sunset reading is 400 lux
   // Therefore any brighter than this leads to streetlight being switched off
   // Otherwise inverse scale the brightness between 0 - 255 (8-bit PWM)
-  if (lux < 400) {
+  if (is_man_on) {
+    brightness = 255;
+  }
+  else if (is_man_off) {
+    brightness = 0;
+  }
+  else if (lux < 400) {
     brightness = (lux / 1.57) - 255;
     brightness = abs(brightness);
   } else {
@@ -149,30 +158,48 @@ void loop_lora() {
     Serial.println("(you may send a limited amount of messages per minute, depending on the signal strength");
     Serial.println("it may vary from 1 message every couple of seconds to 1 message every minute)");
   }
+
+  // wait for downlink message...
   delay(1000);
   if (!modem.available()) {
-    Serial.println("No manual config!");
+    Serial.println("No downlink message received at this time.");
     return;
   }
+
   char rcv[64];
   int i = 0;
   while (modem.available()) {
     rcv[i++] = (char)modem.read();
   }
-  Serial.print("Received: ");
-  StaticJsonDocument<200> resp;
-  DeserializationError error = deserializeJson(resp, jsonString);
 
-  // Check for parsing errors
-  if (error) {
-    Serial.print("JSON parsing failed: ");
-    Serial.println(error.c_str());
+  // check the 3 digit status code
+  String code_string;
+  char code[4];
+  for (int j = 0; j < 3; j++) {
+    code[j] = rcv[j];
+  }
+  code[3] = '\0'; // null terminator
+  code_string = String(code);
+
+  if (code_string == "100") {
+    Serial.println("Manual ON mode set...");
+    is_man_on = true;
+    is_man_off = false;
     return;
   }
 
-  int b = resp["brightness"];
+  if (code_string == "000") {
+    Serial.println("Manual OFF mode set...");
+    is_man_on = false;
+    is_man_off = true;
+    return;
+  }
 
-  Serial.print(b);
-  Serial.println();
+  if (code_string == "999") {
+    Serial.println("Reverted to STANDARD mode...");
+    is_man_on = false;
+    is_man_off = false;
+    return;
+  }
 
 }
