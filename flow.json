@@ -20,8 +20,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 180,
-        "y": 740,
+        "x": 280,
+        "y": 780,
         "wires": [
             [
                 "afe0f07b548eb442",
@@ -45,8 +45,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 760,
-        "y": 160,
+        "x": 1080,
+        "y": 960,
         "wires": []
     },
     {
@@ -60,13 +60,14 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 540,
-        "y": 260,
+        "x": 860,
+        "y": 1060,
         "wires": [
             [
                 "30cf04f3bebd7556",
                 "95e9848d36dbd314",
-                "f16dba8ad5bbd345"
+                "f16dba8ad5bbd345",
+                "1447a54065ad64d0"
             ]
         ]
     },
@@ -94,8 +95,8 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 790,
-        "y": 260,
+        "x": 1110,
+        "y": 1060,
         "wires": []
     },
     {
@@ -111,8 +112,8 @@
         "format": "{{msg.payload}} GMT",
         "layout": "row-center",
         "className": "",
-        "x": 820,
-        "y": 580,
+        "x": 1100,
+        "y": 600,
         "wires": []
     },
     {
@@ -126,8 +127,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 580,
-        "y": 540,
+        "x": 860,
+        "y": 560,
         "wires": [
             [
                 "db624ad582a773f8",
@@ -148,8 +149,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 780,
-        "y": 480,
+        "x": 1060,
+        "y": 500,
         "wires": []
     },
     {
@@ -190,8 +191,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 820,
-        "y": 340,
+        "x": 1140,
+        "y": 1140,
         "wires": [
             []
         ]
@@ -207,8 +208,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 570,
-        "y": 720,
+        "x": 850,
+        "y": 740,
         "wires": [
             [
                 "6f229a1b8011fbc6",
@@ -228,8 +229,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 820,
-        "y": 720,
+        "x": 1100,
+        "y": 740,
         "wires": []
     },
     {
@@ -264,8 +265,8 @@
         "mapurl": "",
         "mapopt": "",
         "mapwms": false,
-        "x": 820,
-        "y": 820,
+        "x": 1100,
+        "y": 840,
         "wires": []
     },
     {
@@ -279,14 +280,13 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 610,
-        "y": 1040,
+        "x": 830,
+        "y": 300,
         "wires": [
             [
                 "fa445db8dda58180",
                 "4f07bbbfa0fe5cdf",
-                "b4f1307cad533869",
-                "edf592639e33f6a4"
+                "b4f1307cad533869"
             ]
         ]
     },
@@ -328,8 +328,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 860,
-        "y": 960,
+        "x": 1080,
+        "y": 220,
         "wires": [
             []
         ]
@@ -358,8 +358,8 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 830,
-        "y": 1140,
+        "x": 1050,
+        "y": 400,
         "wires": []
     },
     {
@@ -368,8 +368,8 @@
         "z": "187e9ec281c222a8",
         "mydb": "1d7fba2766d0a819",
         "name": "my-db",
-        "x": 510,
-        "y": 1480,
+        "x": 790,
+        "y": 1500,
         "wires": [
             [
                 "bc5e391067a4103a"
@@ -387,8 +387,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 300,
-        "y": 1480,
+        "x": 580,
+        "y": 1500,
         "wires": [
             [
                 "2bf9e2c77bd08ce5"
@@ -408,8 +408,8 @@
         "format": "{{msg.payload}}%",
         "layout": "row-center",
         "className": "",
-        "x": 900,
-        "y": 1480,
+        "x": 1240,
+        "y": 1500,
         "wires": []
     },
     {
@@ -423,13 +423,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 660,
-        "y": 1480,
+        "x": 940,
+        "y": 1500,
         "wires": [
             [
                 "71bd6ee38f3d68d9",
-                "edf592639e33f6a4",
-                "b0b1bd2f7f8f9d42"
+                "725ad77eaeca58e5"
             ]
         ]
     },
@@ -445,8 +444,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 840,
-        "y": 1060,
+        "x": 1060,
+        "y": 320,
         "wires": []
     },
     {
@@ -461,55 +460,21 @@
         "key": "topic",
         "joiner": "\\n",
         "joinerType": "str",
-        "accumulate": false,
+        "accumulate": true,
         "timeout": "",
-        "count": "",
+        "count": "2",
         "reduceRight": false,
         "reduceExp": "",
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 810,
-        "y": 1280,
+        "x": 1090,
+        "y": 1340,
         "wires": [
             [
-                "26d2503b6f442a96",
-                "1d4da255ae386c9c"
+                "05b7306c9e3203cd"
             ]
         ]
-    },
-    {
-        "id": "26d2503b6f442a96",
-        "type": "ui_text",
-        "z": "187e9ec281c222a8",
-        "group": "0d50e0f6edec8522",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "Difference",
-        "format": "{{msg.payload}}",
-        "layout": "row-center",
-        "className": "",
-        "x": 1020,
-        "y": 1340,
-        "wires": []
-    },
-    {
-        "id": "1d4da255ae386c9c",
-        "type": "debug",
-        "z": "187e9ec281c222a8",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1020,
-        "y": 1280,
-        "wires": []
     },
     {
         "id": "75f7e12d9f3281d0",
@@ -613,8 +578,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 760,
-        "y": 2480,
+        "x": 780,
+        "y": 2500,
         "wires": [
             [
                 "75f7e12d9f3281d0"
@@ -824,10 +789,149 @@
         ]
     },
     {
-        "id": "b0b1bd2f7f8f9d42",
+        "id": "1447a54065ad64d0",
+        "type": "change",
+        "z": "187e9ec281c222a8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "current",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 1280,
+        "wires": [
+            [
+                "edf592639e33f6a4"
+            ]
+        ]
+    },
+    {
+        "id": "725ad77eaeca58e5",
+        "type": "change",
+        "z": "187e9ec281c222a8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "avg",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 1400,
+        "wires": [
+            [
+                "edf592639e33f6a4"
+            ]
+        ]
+    },
+    {
+        "id": "6525b9c50cc98058",
+        "type": "switch",
+        "z": "187e9ec281c222a8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "40",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1390,
+        "y": 1340,
+        "wires": [
+            [
+                "cecf2194fc8198be"
+            ]
+        ]
+    },
+    {
+        "id": "05b7306c9e3203cd",
+        "type": "function",
+        "z": "187e9ec281c222a8",
+        "name": "function 3",
+        "func": "let diff = Math.abs(msg.payload[\"current\"] - msg.payload[\"avg\"]);\n\nmsg.payload = diff;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1240,
+        "y": 1340,
+        "wires": [
+            [
+                "6525b9c50cc98058",
+                "c40addb3898bea65"
+            ]
+        ]
+    },
+    {
+        "id": "d167afc68db9c0ad",
+        "type": "ui_toast",
+        "z": "187e9ec281c222a8",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "ERROR",
+        "name": "",
+        "x": 1670,
+        "y": 1260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cecf2194fc8198be",
+        "type": "function",
+        "z": "187e9ec281c222a8",
+        "name": "function 4",
+        "func": "msg.payload = \"This Street light appears to have malfunctioned\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1560,
+        "y": 1320,
+        "wires": [
+            [
+                "d167afc68db9c0ad"
+            ]
+        ]
+    },
+    {
+        "id": "c40addb3898bea65",
         "type": "debug",
         "z": "187e9ec281c222a8",
-        "name": "debug 7",
+        "name": "debug 6",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -835,8 +939,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 860,
-        "y": 1580,
+        "x": 1420,
+        "y": 1420,
         "wires": []
     },
     {
