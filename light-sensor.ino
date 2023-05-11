@@ -119,7 +119,7 @@ void loop_light_sensor() {
   //     Duty Cycle == Brightness Percentage in this case
   //     Load Power == Operating voltage * Operating current - in this case 2.3V and 0.02A
   float load_power = 2.3 * 0.02;
-  power = int(brightness_perc * load_power);
+  power = int((brightness_perc / 100) * load_power);
 
   Serial.print("Brightness(%): ");
   Serial.println(brightness_perc);
