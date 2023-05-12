@@ -117,13 +117,16 @@ void loop_light_sensor() {
   // Calculating power consumption with a PWM signal is:
   //   Power Consumption = Duty Cycle * Load Power
   //     Duty Cycle == Brightness Percentage in this case
-  //     Load Power == Operating voltage * Operating current - in this case 2.3V and 0.02A
+  //     Load Power == Operating voltage * Operating current - in this case 2.3V and 20mA
   float load_power = 2.3 * 0.02;
-  power = int((brightness_perc / 100) * load_power);
+  float duty_cycle = brightness_perc * 0.01;
+  float p = duty_cycle * load_power;
+  p = p * 1000;
+  power = round(p);
 
   Serial.print("Brightness(%): ");
   Serial.println(brightness_perc);
-  Serial.print("Power(W): ");
+  Serial.print("Power(mW): ");
   Serial.println(power);
   analogWrite(ledPin, brightness);
 
@@ -178,6 +181,9 @@ void loop_lora() {
   }
   code[3] = '\0'; // null terminator
   code_string = String(code);
+  Serial.print("Received: ");
+  Serial.print(code_string);
+  Serial.println();
 
   if (code_string == "100") {
     Serial.println("Manual ON mode set...");
@@ -186,7 +192,7 @@ void loop_lora() {
     return;
   }
 
-  if (code_string == "000") {
+  if (code_string == "101") {
     Serial.println("Manual OFF mode set...");
     is_man_on = false;
     is_man_off = true;

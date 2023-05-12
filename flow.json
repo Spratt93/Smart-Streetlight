@@ -300,7 +300,7 @@
         "width": "6",
         "height": "7",
         "label": "Power over time",
-        "chartType": "bar",
+        "chartType": "line",
         "legend": "false",
         "xformat": "HH:mm:ss",
         "interpolate": "linear",
@@ -315,7 +315,7 @@
         "useOneColor": false,
         "useUTC": false,
         "colors": [
-            "#1f77b4",
+            "#f70233",
             "#aec7e8",
             "#ff7f0e",
             "#2ca02c",
@@ -345,10 +345,10 @@
         "height": 0,
         "gtype": "donut",
         "title": "Power",
-        "label": "W",
+        "label": "mW",
         "format": "{{value}}",
         "min": 0,
-        "max": "4",
+        "max": "40",
         "colors": [
             "#00b500",
             "#e6e600",
@@ -725,7 +725,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"downlinks\":[{\"f_port\":1,\"frm_payload\":\"AAAA\",\"priority\":\"NORMAL\",\"confirmed\":true}]}",
+                "to": "{\"downlinks\":[{\"f_port\":1,\"frm_payload\":\"MTAx\",\"priority\":\"NORMAL\",\"confirmed\":true}]}",
                 "tot": "json"
             }
         ],
@@ -738,7 +738,8 @@
         "y": 2260,
         "wires": [
             [
-                "f4d0d7950e3f2fd3"
+                "f4d0d7950e3f2fd3",
+                "bcf87d32840acb2b"
             ]
         ]
     },
@@ -941,6 +942,22 @@
         "statusType": "auto",
         "x": 1420,
         "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "bcf87d32840acb2b",
+        "type": "debug",
+        "z": "187e9ec281c222a8",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 2380,
         "wires": []
     },
     {
