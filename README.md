@@ -1,18 +1,17 @@
-# Smart Streetlighting using LoRaWAN
+# Smart Street lighting using LoRaWAN 💡
 
 ### Proof of concept project
 
-Streetlight that adjusts its brightness according to a light sensor.
-This reduces power consumption, compared to a traditional timer.
-It periodically sends its brightness to an application server through
-the LoRaWAN infrastructure. This allows the monitoring of Streetlights in a city.
-Can be used to detect outages and monitor energy consumption - all whilst being
-low powered.
-
+This project is a proof of concept. 
+I designed a street light that:
+- Adjusts its brightness depending on ambient light
+- Sends its current brightness and power draw over LoRa
+- This is communicated to my application running on The Things Network
+- My node-RED GUI interfaces with the application using MQTT
 
 Parts:
 - Arduino MKRWAN 1300 
-- LED (Streetlight concept)
+- LED
 - BH1750 light sensor
 
 To run:
@@ -21,3 +20,6 @@ To run:
 - Go to *localhost:1880*
 - Import *flow.json* into the canvas
 - Go to dashboard and view test deployment
+
+My application dashboard is shown ![here](/ui-final.png)
+
