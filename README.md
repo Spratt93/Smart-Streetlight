@@ -21,5 +21,5 @@ To run:
 - Import *flow.json* into the canvas
 - Go to dashboard and view test deployment
 
-My application dashboard is shown ![here](/ui-final.png)
+My application dashboard: ![here](/ui-final.png)
 
