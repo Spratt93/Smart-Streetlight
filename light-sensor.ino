@@ -8,8 +8,8 @@ BH1750 lightMeter;
 int ledPin = 0;
 
 LoRaModem modem;
-String appEui = "0000000000000000";
-String appKey = "4DE8F1A874E276F98D26E29F1E4E258F";
+String appEui = "XXXXXXXXXXXXXX"; // your ttn app eui
+String appKey = "XXXXXXXXXXXXXXXXXXXXXXXXX"; // your ttn app key
 
 float brightness;
 int brightness_perc;
