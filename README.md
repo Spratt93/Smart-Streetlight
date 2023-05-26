@@ -1,8 +1,6 @@
-<div align="center"> <h1>Smart Street Lighting 🏙️ </h1> </div>
+<div align="center"> <h1>Smart Street Lighting  🏙️ </h1> </div>
 
 <div align="center">
-    <img src="https://img.shields.io/github/languages/top/Spratt93/Smart-Streelight?style=for-the-badge" alt="badge">
-    <img src="https://img.shields.io/github/languages/count/Spratt93/Smart-Streelight?style=for-the-badge" alt="badge">
     <img src="https://img.shields.io/github/watchers/Spratt93/Smart-Streetlight?style=for-the-badge" alt="badge">
     <img src="https://img.shields.io/badge/-Arduino-00979D?style=for-the-badge&logo=Arduino&logoColor=white" alt="badge">
     <img src="https://img.shields.io/badge/Node--RED-%238F0000.svg?style=for-the-badge&logo=node-red&logoColor=white" alt="badge">
