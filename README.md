@@ -1,4 +1,4 @@
-<div align="center"> <h1>Smart Street Lighting</h1> </div>
+<div align="center"> <h1>Smart Street Lighting 🏙️ </h1> </div>
 
 <div align="center">
     <img src="https://img.shields.io/github/languages/top/Spratt93/Smart-Streelight?style=for-the-badge" alt="badge">
